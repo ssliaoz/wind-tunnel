@@ -37,9 +37,6 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     @Autowired
     private MongoTemplate mongoTemplate;
     
-    // 用于模拟流处理的状态存储
-    private final Map<String, List<RealTimeData>> windowBuffers = new ConcurrentHashMap<>();
-    
     @Override
     public Result<Map<String, Object>> aggregateByTimeWindow(@org.springframework.lang.NonNull String source, int windowSize, int slideSize) {
         log.info("按时间窗口聚合数据，数据源: {}, 窗口大小: {}秒, 滑动步长: {}秒", source, windowSize, slideSize);
