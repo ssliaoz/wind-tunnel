@@ -3,6 +3,7 @@ package com.windtunnel.service.base;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      * @param id ID
      * @return 实体
      */
-    public T findById(ID id) {
+    public T findById(@NonNull ID id) {
         logOperation("查找", id);
         T entity = getRepository().findById(id).orElse(null);
         logOperationResult("查找", id, entity != null);
@@ -79,7 +80,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      *
      * @param id ID
      */
-    public void deleteById(ID id) {
+    public void deleteById(@NonNull ID id) {
         logOperation("删除", id);
         getRepository().deleteById(id);
         logOperationSuccess("删除", id);
@@ -113,7 +114,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      * @param id ID
      * @return 是否存在
      */
-    public boolean existsById(ID id) {
+    public boolean existsById(@NonNull ID id) {
         return getRepository().existsById(id);
     }
 

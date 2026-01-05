@@ -3,6 +3,7 @@ package com.windtunnel.service.base;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,7 @@ public abstract class MyBatisBaseService<M extends BaseMapper<T>, T, ID extends 
      * @param id ID
      * @return 实体
      */
-    public T findById(ID id) {
+    public T findById(@NonNull ID id) {
         logOperation("查找", id);
         T entity = super.getById(id);
         logOperationResult("查找", id, entity != null);
@@ -79,7 +80,7 @@ public abstract class MyBatisBaseService<M extends BaseMapper<T>, T, ID extends 
      * @param id ID
      * @return 删除是否成功
      */
-    public boolean deleteById(ID id) {
+    public boolean deleteById(@NonNull ID id) {
         logOperation("删除", id);
         boolean result = super.removeById(id);
         logOperationSuccess("删除", result);
@@ -105,7 +106,7 @@ public abstract class MyBatisBaseService<M extends BaseMapper<T>, T, ID extends 
      * @param id ID
      * @return 是否存在
      */
-    public boolean existsById(ID id) {
+    public boolean existsById(@NonNull ID id) {
         return super.getById(id) != null;
     }
 
