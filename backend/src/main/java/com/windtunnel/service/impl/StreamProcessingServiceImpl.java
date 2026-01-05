@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -453,28 +454,28 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
         }
         
         if (validWindSpeedCount > 0) {
-            averages.put("windSpeed", windSpeedSum.divide(BigDecimal.valueOf(validWindSpeedCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("windSpeed", windSpeedSum.divide(BigDecimal.valueOf(validWindSpeedCount), 4, RoundingMode.HALF_UP));
         }
         if (validTemperatureCount > 0) {
-            averages.put("temperature", temperatureSum.divide(BigDecimal.valueOf(validTemperatureCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("temperature", temperatureSum.divide(BigDecimal.valueOf(validTemperatureCount), 4, RoundingMode.HALF_UP));
         }
         if (validPressureCount > 0) {
-            averages.put("pressure", pressureSum.divide(BigDecimal.valueOf(validPressureCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("pressure", pressureSum.divide(BigDecimal.valueOf(validPressureCount), 4, RoundingMode.HALF_UP));
         }
         if (validFlowCount > 0) {
-            averages.put("flow", flowSum.divide(BigDecimal.valueOf(validFlowCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("flow", flowSum.divide(BigDecimal.valueOf(validFlowCount), 4, RoundingMode.HALF_UP));
         }
         if (validPowerCount > 0) {
-            averages.put("power", powerSum.divide(BigDecimal.valueOf(validPowerCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("power", powerSum.divide(BigDecimal.valueOf(validPowerCount), 4, RoundingMode.HALF_UP));
         }
         if (validVibrationCount > 0) {
-            averages.put("vibration", vibrationSum.divide(BigDecimal.valueOf(validVibrationCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("vibration", vibrationSum.divide(BigDecimal.valueOf(validVibrationCount), 4, RoundingMode.HALF_UP));
         }
         if (validVoltageCount > 0) {
-            averages.put("voltage", voltageSum.divide(BigDecimal.valueOf(validVoltageCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("voltage", voltageSum.divide(BigDecimal.valueOf(validVoltageCount), 4, RoundingMode.HALF_UP));
         }
         if (validCurrentCount > 0) {
-            averages.put("current", currentSum.divide(BigDecimal.valueOf(validCurrentCount), 4, BigDecimal.ROUND_HALF_UP));
+            averages.put("current", currentSum.divide(BigDecimal.valueOf(validCurrentCount), 4, RoundingMode.HALF_UP));
         }
         
         return averages;
@@ -669,28 +670,28 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
         }
         
         if (validWindSpeedCount > 1) {
-            stdDev.put("windSpeed", sqrt(windSpeedVariance.divide(BigDecimal.valueOf(validWindSpeedCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("windSpeed", sqrt(windSpeedVariance.divide(BigDecimal.valueOf(validWindSpeedCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validTemperatureCount > 1) {
-            stdDev.put("temperature", sqrt(temperatureVariance.divide(BigDecimal.valueOf(validTemperatureCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("temperature", sqrt(temperatureVariance.divide(BigDecimal.valueOf(validTemperatureCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validPressureCount > 1) {
-            stdDev.put("pressure", sqrt(pressureVariance.divide(BigDecimal.valueOf(validPressureCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("pressure", sqrt(pressureVariance.divide(BigDecimal.valueOf(validPressureCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validFlowCount > 1) {
-            stdDev.put("flow", sqrt(flowVariance.divide(BigDecimal.valueOf(validFlowCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("flow", sqrt(flowVariance.divide(BigDecimal.valueOf(validFlowCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validPowerCount > 1) {
-            stdDev.put("power", sqrt(powerVariance.divide(BigDecimal.valueOf(validPowerCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("power", sqrt(powerVariance.divide(BigDecimal.valueOf(validPowerCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validVibrationCount > 1) {
-            stdDev.put("vibration", sqrt(vibrationVariance.divide(BigDecimal.valueOf(validVibrationCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("vibration", sqrt(vibrationVariance.divide(BigDecimal.valueOf(validVibrationCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validVoltageCount > 1) {
-            stdDev.put("voltage", sqrt(voltageVariance.divide(BigDecimal.valueOf(validVoltageCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("voltage", sqrt(voltageVariance.divide(BigDecimal.valueOf(validVoltageCount - 1), 4, RoundingMode.HALF_UP)));
         }
         if (validCurrentCount > 1) {
-            stdDev.put("current", sqrt(currentVariance.divide(BigDecimal.valueOf(validCurrentCount - 1), 4, BigDecimal.ROUND_HALF_UP)));
+            stdDev.put("current", sqrt(currentVariance.divide(BigDecimal.valueOf(validCurrentCount - 1), 4, RoundingMode.HALF_UP)));
         }
         
         return stdDev;
