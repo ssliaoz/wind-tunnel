@@ -2,6 +2,7 @@ package com.windtunnel.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -30,16 +31,19 @@ public class RealTimeData {
     /**
      * 数据来源（CWT1_PC、CWT2_PC、CWT3_PC、AAWT_PC、PUBLIC_POWER_SYSTEM_PC）
      */
+    @Indexed
     private String source;
 
     /**
      * 设备ID
      */
+    @Indexed
     private Long equipmentId;
 
     /**
      * 数据时间戳
      */
+    @Indexed
     private LocalDateTime dataTime;
 
     /**
@@ -93,13 +97,21 @@ public class RealTimeData {
     private String otherParams;
 
     /**
+     * 实验室ID（用于数据权限控制）
+     */
+    @Indexed
+    private Long laboratoryId;
+
+    /**
      * 数据状态（0-正常，1-异常，2-故障）
      */
+    @Indexed
     private Integer status;
 
     /**
      * 风险等级（1-一般，2-较重，3-严重）
      */
+    @Indexed
     private Integer riskLevel;
 
     /**
