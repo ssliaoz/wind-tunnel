@@ -41,7 +41,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     private final Map<String, List<RealTimeData>> windowBuffers = new ConcurrentHashMap<>();
     
     @Override
-    public Result<Map<String, Object>> aggregateByTimeWindow(String source, int windowSize, int slideSize) {
+    public Result<Map<String, Object>> aggregateByTimeWindow(@org.springframework.lang.NonNull String source, int windowSize, int slideSize) {
         log.info("按时间窗口聚合数据，数据源: {}, 窗口大小: {}秒, 滑动步长: {}秒", source, windowSize, slideSize);
         
         try {
@@ -66,7 +66,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> calculateAverage(String source, LocalDateTime startTime, LocalDateTime endTime) {
+    public Result<Map<String, Object>> calculateAverage(@org.springframework.lang.NonNull String source, @org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
         log.info("计算平均值，数据源: {}, 时间范围: {} - {}", source, startTime, endTime);
         
         try {
@@ -83,7 +83,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> calculateMax(String source, LocalDateTime startTime, LocalDateTime endTime) {
+    public Result<Map<String, Object>> calculateMax(@org.springframework.lang.NonNull String source, @org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
         log.info("计算最大值，数据源: {}, 时间范围: {} - {}", source, startTime, endTime);
         
         try {
@@ -100,7 +100,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> calculateMin(String source, LocalDateTime startTime, LocalDateTime endTime) {
+    public Result<Map<String, Object>> calculateMin(@org.springframework.lang.NonNull String source, @org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
         log.info("计算最小值，数据源: {}, 时间范围: {} - {}", source, startTime, endTime);
         
         try {
@@ -117,7 +117,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<List<RealTimeData>> detectComplexEvents(List<RealTimeData> events) {
+    public Result<List<RealTimeData>> detectComplexEvents(@org.springframework.lang.NonNull List<RealTimeData> events) {
         log.info("检测复杂事件，事件数量: {}", events != null ? events.size() : 0);
         
         try {
@@ -147,7 +147,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> monitorDataQuality(RealTimeData realTimeData) {
+    public Result<Map<String, Object>> monitorDataQuality(@org.springframework.lang.NonNull RealTimeData realTimeData) {
         log.info("实时数据质量监控，数据ID: {}", realTimeData.getId());
         
         try {
@@ -173,7 +173,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Boolean> detectAnomalyByRules(RealTimeData realTimeData) {
+    public Result<Boolean> detectAnomalyByRules(@org.springframework.lang.NonNull RealTimeData realTimeData) {
         log.info("基于规则的异常检测，数据ID: {}", realTimeData.getId());
         
         try {
@@ -239,7 +239,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> thresholdMonitoring(RealTimeData realTimeData, Map<String, Object> thresholds) {
+    public Result<Map<String, Object>> thresholdMonitoring(@org.springframework.lang.NonNull RealTimeData realTimeData, @org.springframework.lang.NonNull Map<String, Object> thresholds) {
         log.info("阈值监控与告警，数据ID: {}", realTimeData.getId());
         
         try {
@@ -298,7 +298,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> trendAnalysis(String source, int dataPoints) {
+    public Result<Map<String, Object>> trendAnalysis(@org.springframework.lang.NonNull String source, int dataPoints) {
         log.info("趋势分析与预测，数据源: {}, 数据点数量: {}", source, dataPoints);
         
         try {
@@ -324,7 +324,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<RealTimeData> processRealTimeDataStream(RealTimeData realTimeData) {
+    public Result<RealTimeData> processRealTimeDataStream(@org.springframework.lang.NonNull RealTimeData realTimeData) {
         log.info("处理实时数据流，数据ID: {}", realTimeData.getId());
         
         try {

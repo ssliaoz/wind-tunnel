@@ -52,7 +52,7 @@ public class RealTimeDataServiceImpl extends MongoBaseService<RealTimeData, Stri
      * @return 实时数据实体
      */
     @Override
-    public RealTimeData findById(String id) {
+    public RealTimeData findById(@org.springframework.lang.NonNull String id) {
         return super.findById(id);
     }
 
@@ -84,7 +84,7 @@ public class RealTimeDataServiceImpl extends MongoBaseService<RealTimeData, Stri
      * @return 实时数据列表
      */
     @Override
-    public List<RealTimeData> findBySource(String source) {
+    public List<RealTimeData> findBySource(@org.springframework.lang.NonNull String source) {
         logger.debug("根据数据源查询实时数据: {}", source);
         return realTimeDataRepository.findBySource(source);
     }
@@ -109,7 +109,7 @@ public class RealTimeDataServiceImpl extends MongoBaseService<RealTimeData, Stri
      * @return 删除的数据条数
      */
     @Override
-    public int deleteExpiredData(LocalDateTime expiredTime) {
+    public int deleteExpiredData(@org.springframework.lang.NonNull LocalDateTime expiredTime) {
         logger.info("开始删除过期数据，过期时间: {}", expiredTime);
         List<RealTimeData> expiredDataList = realTimeDataRepository.findByDataTimeBefore(expiredTime);
         int count = expiredDataList.size();
@@ -125,7 +125,7 @@ public class RealTimeDataServiceImpl extends MongoBaseService<RealTimeData, Stri
      * @return 实时数据列表
      */
     @Override
-    public List<RealTimeData> findByLaboratoryId(Long laboratoryId) {
+    public List<RealTimeData> findByLaboratoryId(@org.springframework.lang.NonNull Long laboratoryId) {
         logger.debug("根据实验室ID查询实时数据: {}", laboratoryId);
         return realTimeDataRepository.findByLaboratoryId(laboratoryId);
     }
