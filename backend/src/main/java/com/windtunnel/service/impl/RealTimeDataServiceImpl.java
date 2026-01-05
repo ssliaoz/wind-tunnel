@@ -52,10 +52,10 @@ public class RealTimeDataServiceImpl extends MongoBaseService<RealTimeData, Stri
      * @return 实时数据实体
      */
     @Override
-    public RealTimeData findById(@org.springframework.lang.NonNull String id) {
+    public RealTimeData findById(String id) {
         return super.findById(id);
     }
-
+    
     /**
      * 查询所有实时数据
      * 
@@ -97,7 +97,7 @@ public class RealTimeDataServiceImpl extends MongoBaseService<RealTimeData, Stri
      * @return 实时数据列表
      */
     @Override
-    public List<RealTimeData> findByDataTimeBetween(LocalDateTime startTime, LocalDateTime endTime) {
+    public List<RealTimeData> findByDataTimeBetween(@org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
         logger.debug("根据时间范围查询实时数据: {} - {}", startTime, endTime);
         return realTimeDataRepository.findByDataTimeBetween(startTime, endTime);
     }

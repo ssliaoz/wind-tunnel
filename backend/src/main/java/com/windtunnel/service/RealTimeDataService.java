@@ -3,6 +3,7 @@ package com.windtunnel.service;
 import com.windtunnel.entity.RealTimeData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,7 +33,7 @@ public interface RealTimeDataService {
      * @param id 实时数据ID
      * @return 实时数据实体
      */
-    RealTimeData findById(String id);
+    RealTimeData findById(@NonNull String id);
 
     /**
      * 查询所有实时数据
@@ -55,7 +56,7 @@ public interface RealTimeDataService {
      * @param source 数据源
      * @return 实时数据列表
      */
-    List<RealTimeData> findBySource(String source);
+    List<RealTimeData> findBySource(@NonNull String source);
 
     /**
      * 根据时间范围查询实时数据
@@ -72,7 +73,7 @@ public interface RealTimeDataService {
      * @param expiredTime 过期时间点
      * @return 删除的数据条数
      */
-    int deleteExpiredData(LocalDateTime expiredTime);
+    int deleteExpiredData(@NonNull LocalDateTime expiredTime);
 
     /**
      * 根据实验室ID查询实时数据
@@ -80,6 +81,6 @@ public interface RealTimeDataService {
      * @param laboratoryId 实验室ID
      * @return 实时数据列表
      */
-    List<RealTimeData> findByLaboratoryId(Long laboratoryId);
+    List<RealTimeData> findByLaboratoryId(@NonNull Long laboratoryId);
 
 }
