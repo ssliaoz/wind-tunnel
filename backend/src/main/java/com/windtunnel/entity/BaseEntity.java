@@ -43,9 +43,9 @@ public abstract class BaseEntity implements Serializable {
     private Integer deleted = 0;
 
     /**
-     * 版本号（用于乐观锁）
+     * 数据版本号（用于业务版本控制，非JPA乐观锁）
      */
     @TableField(fill = FieldFill.INSERT)
-    private Integer version = 0;
+    private Integer dataVersion = 0;
 
 }

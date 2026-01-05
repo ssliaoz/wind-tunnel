@@ -13,6 +13,8 @@ import java.util.Optional;
 /**
  * 基础服务抽象类
  * 使用模板方法模式提供通用的CRUD操作
+ * 注意：当与继承了BaseEntity的实体类配合使用时，JPA会将实体类中的'@Version'注解字段作为乐观锁版本控制
+ * 请避免在BaseEntity中使用'@Version'注解的字段名，当前已将版本字段重命名为'dataVersion'
  *
  * @param <T>  实体类型
  * @param <ID> 实体ID类型
