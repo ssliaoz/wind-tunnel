@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: wind_tunnel_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wind_tunnel
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    # 使用国内镜像源（如果可用）
+    # image: registry.cn-hangzhou.aliyuncs.com/mirrors/mysql:8.0
+
+  mongodb:
+    image: mongo:5.0
+    container_name: wind_tunnel_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    # image: registry.cn-hangzhou.aliyuncs.com/mirrors/mongo:5.0
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: wind_tunnel_redis
+    ports:
+      - "6379:6379"
+    # image: registry.cn-hangzhou.aliyuncs.com/mirrors/redis:7.0-alpine
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: wind_tunnel_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    # image: registry.cn-hangzhou.aliyuncs.com/mirrors/rabbitmq:3.11-management
+
+  nacos:
+    image: nacos/nacos-server:v2.2.3
+    container_name: wind_tunnel_nacos
+    environment:
+      - MODE=standalone
+      - PREFER_HOST_MODE=hostname
+      - NACOS_AUTH_ENABLE=false
+    ports:
+      - "8848:8848"
+
+  wind-tunnel-backend:
+    build: .
+    container_name: wind_tunnel_backend
+    depends_on:
+      - mysql
+      - mongodb
+      - redis
+      - rabbitmq
+      - nacos
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/wind_tunnel?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/wind_tunnel
+      - SPRING_REDIS_HOST=redis
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=nacos:8848
+    restart: on-failure
+
+volumes:
+  mysql_data:
+  mongodb_data:
