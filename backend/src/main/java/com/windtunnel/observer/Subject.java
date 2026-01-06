@@ -1,8 +1,5 @@
 package com.windtunnel.observer;
 
-import java.util.List;
-import java.util.ArrayList;
-
 /**
  * 被观察者接口
  * 定义被观察者需要实现的方法

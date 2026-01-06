@@ -67,7 +67,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
     @Override
     public List<SafetyInspection> findAll() {
         log.debug("查询所有隐患排查记录");
-        return safetyInspectionRepository.selectList(null);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(null);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -101,7 +102,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据实验室ID查询隐患排查记录: {}", laboratoryId);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("laboratory_id", laboratoryId);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -115,7 +117,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据试验项目ID查询隐患排查记录: {}", experimentProjectId);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("experiment_project_id", experimentProjectId);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -129,7 +132,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据设备ID查询隐患排查记录: {}", equipmentId);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("equipment_id", equipmentId);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -143,7 +147,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据排查类型查询隐患排查记录: {}", inspectionType);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("inspection_type", inspectionType);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -157,7 +162,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据排查状态查询隐患排查记录: {}", inspectionStatus);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("inspection_status", inspectionStatus);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -172,7 +178,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据时间范围查询隐患排查记录: {} - {}", startTime, endTime);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.between("planned_start_time", startTime, endTime);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -186,7 +193,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据排查负责人ID查询隐患排查记录: {}", inspectorId);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("inspector_id", inspectorId);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -200,7 +208,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据整改状态查询隐患排查记录: {}", rectificationStatus);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("rectification_status", rectificationStatus);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -214,7 +223,8 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
         log.debug("根据排查结果查询隐患排查记录: {}", inspectionResult);
         QueryWrapper<SafetyInspection> wrapper = new QueryWrapper<>();
         wrapper.eq("inspection_result", inspectionResult);
-        return safetyInspectionRepository.selectList(wrapper);
+        List<SafetyInspection> result = safetyInspectionRepository.selectList(wrapper);
+        return result != null ? result : java.util.Collections.emptyList();
     }
 
     /**
@@ -380,6 +390,10 @@ public class SafetyInspectionServiceImpl implements SafetyInspectionService {
             inspections = findByPlannedStartTimeBetween(startTime, endTime);
         } else {
             inspections = findAll();
+        }
+        // 确保列表不为null
+        if (inspections == null) {
+            inspections = java.util.Collections.emptyList();
         }
         
         // 生成报告内容

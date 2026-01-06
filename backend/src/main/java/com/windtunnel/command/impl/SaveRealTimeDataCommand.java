@@ -5,6 +5,7 @@ import com.windtunnel.entity.RealTimeData;
 import com.windtunnel.repository.RealTimeDataRepository;
 import lombok.extern.slf4j.Slf4j;
 
+
 /**
  * 保存实时数据命令
  */
@@ -21,6 +22,7 @@ public class SaveRealTimeDataCommand implements Command {
     }
     
     @Override
+    @SuppressWarnings("null")
     public void execute() {
         log.info("执行保存实时数据命令，数据ID: {}", realTimeData.getId());
         savedData = repository.save(realTimeData);
@@ -28,6 +30,7 @@ public class SaveRealTimeDataCommand implements Command {
     }
     
     @Override
+    @SuppressWarnings("null")
     public void undo() {
         if (savedData != null) {
             log.info("撤销保存实时数据命令，删除数据ID: {}", savedData.getId());

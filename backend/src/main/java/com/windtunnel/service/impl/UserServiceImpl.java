@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class UserServiceImpl extends MyBatisBaseService<UserRepository, User, Lo
         }
 
         // 验证密码（实际项目中应使用更安全的加密方式）
-        String encryptedPassword = DigestUtils.md5DigestAsHex(password.getBytes());
+        String encryptedPassword = DigestUtils.md5DigestAsHex(getBytesSafely(password));
         if (!user.getPassword().equals(encryptedPassword)) {
             return Result.error("密码错误");
         }
@@ -84,7 +85,7 @@ public class UserServiceImpl extends MyBatisBaseService<UserRepository, User, Lo
         }
 
         // 加密密码
-        String encryptedPassword = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+        String encryptedPassword = DigestUtils.md5DigestAsHex(getBytesSafely(user.getPassword()));
         user.setPassword(encryptedPassword);
 
         // 设置默认状态
@@ -167,6 +168,16 @@ public class UserServiceImpl extends MyBatisBaseService<UserRepository, User, Lo
         }
     }
 
+    /**
+     * 安全地获取字符串的字节数组，避免null值导致的问题
+     * 
+     * @param str 输入字符串
+     * @return 字节数组，如果输入为null则返回空字节数组
+     */
+    private byte[] getBytesSafely(String str) {
+        return str != null ? str.getBytes(StandardCharsets.UTF_8) : new byte[0];
+    }
+
     @Override
     public Result<List<User>> findByLaboratoryId(Long laboratoryId) {
         log.info("根据实验室ID查询用户列表，实验室ID: {}", laboratoryId);
@@ -244,7 +255,7 @@ public class UserServiceImpl extends MyBatisBaseService<UserRepository, User, Lo
         User user = new User();
         user.setId(userId);
         // 使用默认密码并加密
-        String defaultPassword = DigestUtils.md5DigestAsHex(Constants.DefaultValues.DEFAULT_PASSWORD.getBytes());
+        String defaultPassword = DigestUtils.md5DigestAsHex(getBytesSafely(Constants.DefaultValues.DEFAULT_PASSWORD));
         user.setPassword(defaultPassword);
 
         int result = userRepository.updateById(user);

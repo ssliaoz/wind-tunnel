@@ -2,7 +2,6 @@ package com.windtunnel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.windtunnel.common.Constants;
 import com.windtunnel.common.Result;
 import com.windtunnel.entity.EquipmentCategory;
 import com.windtunnel.repository.EquipmentCategoryRepository;

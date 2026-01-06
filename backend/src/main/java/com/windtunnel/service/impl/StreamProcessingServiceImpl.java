@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import org.springframework.lang.NonNull;
 
 /**
  * 流处理服务实现类
@@ -39,7 +39,8 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     private MongoTemplate mongoTemplate;
     
     @Override
-    public Result<Map<String, Object>> aggregateByTimeWindow(@org.springframework.lang.NonNull String source, int windowSize, int slideSize) {
+    @SuppressWarnings("null")
+    public Result<Map<String, Object>> aggregateByTimeWindow(String source, int windowSize, int slideSize) {
         log.info("按时间窗口聚合数据，数据源: {}, 窗口大小: {}秒, 滑动步长: {}秒", source, windowSize, slideSize);
         
         try {
@@ -64,7 +65,8 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> calculateAverage(@org.springframework.lang.NonNull String source, @org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
+    @SuppressWarnings("null")
+    public Result<Map<String, Object>> calculateAverage(String source, LocalDateTime startTime, LocalDateTime endTime) {
         log.info("计算平均值，数据源: {}, 时间范围: {} - {}", source, startTime, endTime);
         
         try {
@@ -81,7 +83,8 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> calculateMax(@org.springframework.lang.NonNull String source, @org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
+    @SuppressWarnings("null")
+    public Result<Map<String, Object>> calculateMax(String source, LocalDateTime startTime, LocalDateTime endTime) {
         log.info("计算最大值，数据源: {}, 时间范围: {} - {}", source, startTime, endTime);
         
         try {
@@ -98,7 +101,8 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> calculateMin(@org.springframework.lang.NonNull String source, @org.springframework.lang.NonNull LocalDateTime startTime, @org.springframework.lang.NonNull LocalDateTime endTime) {
+    @SuppressWarnings("null")
+    public Result<Map<String, Object>> calculateMin(String source, LocalDateTime startTime, LocalDateTime endTime) {
         log.info("计算最小值，数据源: {}, 时间范围: {} - {}", source, startTime, endTime);
         
         try {
@@ -115,7 +119,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<List<RealTimeData>> detectComplexEvents(@org.springframework.lang.NonNull List<RealTimeData> events) {
+    public Result<List<RealTimeData>> detectComplexEvents(List<RealTimeData> events) {
         log.info("检测复杂事件，事件数量: {}", events != null ? events.size() : 0);
         
         try {
@@ -145,23 +149,23 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> monitorDataQuality(@org.springframework.lang.NonNull RealTimeData realTimeData) {
+    public Result<Map<String, Object>> monitorDataQuality(RealTimeData realTimeData) {
         log.info("实时数据质量监控，数据ID: {}", realTimeData.getId());
         
         try {
             Map<String, Object> qualityMetrics = new HashMap<>();
             
             // 检查数据完整性
-            qualityMetrics.put("completeness", checkDataCompleteness(realTimeData));
+            qualityMetrics.put("completeness", Boolean.valueOf(checkDataCompleteness(realTimeData)));
             
             // 检查数据一致性
-            qualityMetrics.put("consistency", checkDataConsistency(realTimeData));
+            qualityMetrics.put("consistency", Boolean.valueOf(checkDataConsistency(realTimeData)));
             
             // 检查数据准确性
-            qualityMetrics.put("accuracy", checkDataAccuracy(realTimeData));
+            qualityMetrics.put("accuracy", Boolean.valueOf(checkDataAccuracy(realTimeData)));
             
             // 检查数据时效性
-            qualityMetrics.put("timeliness", checkDataTimeliness(realTimeData));
+            qualityMetrics.put("timeliness", Boolean.valueOf(checkDataTimeliness(realTimeData)));
             
             return Result.success("数据质量监控完成", qualityMetrics);
         } catch (Exception e) {
@@ -171,7 +175,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Boolean> detectAnomalyByRules(@org.springframework.lang.NonNull RealTimeData realTimeData) {
+    public Result<Boolean> detectAnomalyByRules(RealTimeData realTimeData) {
         log.info("基于规则的异常检测，数据ID: {}", realTimeData.getId());
         
         try {
@@ -237,7 +241,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> thresholdMonitoring(@org.springframework.lang.NonNull RealTimeData realTimeData, @org.springframework.lang.NonNull Map<String, Object> thresholds) {
+    public Result<Map<String, Object>> thresholdMonitoring(RealTimeData realTimeData, Map<String, Object> thresholds) {
         log.info("阈值监控与告警，数据ID: {}", realTimeData.getId());
         
         try {
@@ -247,7 +251,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
             if (realTimeData.getWindSpeed() != null && thresholds.containsKey("windSpeedMax")) {
                 BigDecimal maxWindSpeed = new BigDecimal(thresholds.get("windSpeedMax").toString());
                 if (realTimeData.getWindSpeed().compareTo(maxWindSpeed) > 0) {
-                    monitoringResult.put("windSpeedAlert", true);
+                    monitoringResult.put("windSpeedAlert", Boolean.TRUE);
                     monitoringResult.put("windSpeedMessage", "风速超过阈值: " + maxWindSpeed);
                 }
             }
@@ -256,7 +260,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
             if (realTimeData.getTemperature() != null && thresholds.containsKey("temperatureMax")) {
                 BigDecimal maxTemp = new BigDecimal(thresholds.get("temperatureMax").toString());
                 if (realTimeData.getTemperature().compareTo(maxTemp) > 0) {
-                    monitoringResult.put("temperatureAlert", true);
+                    monitoringResult.put("temperatureAlert", Boolean.TRUE);
                     monitoringResult.put("temperatureMessage", "温度超过阈值: " + maxTemp);
                 }
             }
@@ -265,7 +269,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
             if (realTimeData.getPressure() != null && thresholds.containsKey("pressureMax")) {
                 BigDecimal maxPressure = new BigDecimal(thresholds.get("pressureMax").toString());
                 if (realTimeData.getPressure().compareTo(maxPressure) > 0) {
-                    monitoringResult.put("pressureAlert", true);
+                    monitoringResult.put("pressureAlert", Boolean.TRUE);
                     monitoringResult.put("pressureMessage", "压力超过阈值: " + maxPressure);
                 }
             }
@@ -274,7 +278,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
             if (realTimeData.getVoltage() != null && thresholds.containsKey("voltageMax")) {
                 BigDecimal maxVoltage = new BigDecimal(thresholds.get("voltageMax").toString());
                 if (realTimeData.getVoltage().compareTo(maxVoltage) > 0) {
-                    monitoringResult.put("voltageAlert", true);
+                    monitoringResult.put("voltageAlert", Boolean.TRUE);
                     monitoringResult.put("voltageMessage", "电压超过阈值: " + maxVoltage);
                 }
             }
@@ -283,7 +287,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
             if (realTimeData.getCurrent() != null && thresholds.containsKey("currentMax")) {
                 BigDecimal maxCurrent = new BigDecimal(thresholds.get("currentMax").toString());
                 if (realTimeData.getCurrent().compareTo(maxCurrent) > 0) {
-                    monitoringResult.put("currentAlert", true);
+                    monitoringResult.put("currentAlert", Boolean.TRUE);
                     monitoringResult.put("currentMessage", "电流超过阈值: " + maxCurrent);
                 }
             }
@@ -296,7 +300,8 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<Map<String, Object>> trendAnalysis(@org.springframework.lang.NonNull String source, int dataPoints) {
+    @SuppressWarnings("null")
+    public Result<Map<String, Object>> trendAnalysis(String source, int dataPoints) {
         log.info("趋势分析与预测，数据源: {}, 数据点数量: {}", source, dataPoints);
         
         try {
@@ -322,7 +327,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     }
 
     @Override
-    public Result<RealTimeData> processRealTimeDataStream(@org.springframework.lang.NonNull RealTimeData realTimeData) {
+    public Result<RealTimeData> processRealTimeDataStream(RealTimeData realTimeData) {
         log.info("处理实时数据流，数据ID: {}", realTimeData.getId());
         
         try {
@@ -599,14 +604,14 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
             return stdDev;
         }
         
-        BigDecimal avgWindSpeed = (BigDecimal) averages.get("windSpeed");
-        BigDecimal avgTemperature = (BigDecimal) averages.get("temperature");
-        BigDecimal avgPressure = (BigDecimal) averages.get("pressure");
-        BigDecimal avgFlow = (BigDecimal) averages.get("flow");
-        BigDecimal avgPower = (BigDecimal) averages.get("power");
-        BigDecimal avgVibration = (BigDecimal) averages.get("vibration");
-        BigDecimal avgVoltage = (BigDecimal) averages.get("voltage");
-        BigDecimal avgCurrent = (BigDecimal) averages.get("current");
+        BigDecimal avgWindSpeed = averages.get("windSpeed") instanceof BigDecimal ? (BigDecimal) averages.get("windSpeed") : null;
+        BigDecimal avgTemperature = averages.get("temperature") instanceof BigDecimal ? (BigDecimal) averages.get("temperature") : null;
+        BigDecimal avgPressure = averages.get("pressure") instanceof BigDecimal ? (BigDecimal) averages.get("pressure") : null;
+        BigDecimal avgFlow = averages.get("flow") instanceof BigDecimal ? (BigDecimal) averages.get("flow") : null;
+        BigDecimal avgPower = averages.get("power") instanceof BigDecimal ? (BigDecimal) averages.get("power") : null;
+        BigDecimal avgVibration = averages.get("vibration") instanceof BigDecimal ? (BigDecimal) averages.get("vibration") : null;
+        BigDecimal avgVoltage = averages.get("voltage") instanceof BigDecimal ? (BigDecimal) averages.get("voltage") : null;
+        BigDecimal avgCurrent = averages.get("current") instanceof BigDecimal ? (BigDecimal) averages.get("current") : null;
         
         BigDecimal windSpeedVariance = BigDecimal.ZERO;
         BigDecimal temperatureVariance = BigDecimal.ZERO;
@@ -727,12 +732,14 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
      */
     private boolean checkDataAccuracy(RealTimeData realTimeData) {
         // 检查数据是否在合理范围内
-        return detectAnomalyByRules(realTimeData).getData() == false;
+        Boolean anomalyResult = detectAnomalyByRules(realTimeData).getData();
+        return anomalyResult != null && !anomalyResult;
     }
     
     /**
      * 检查数据时效性
      */
+    @SuppressWarnings("null")
     private boolean checkDataTimeliness(RealTimeData realTimeData) {
         // 检查数据时间戳是否在合理范围内
         if (realTimeData.getDataTime() == null) {
@@ -749,12 +756,14 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     /**
      * 更新风险等级
      */
+    @SuppressWarnings("null")
     private void updateRiskLevel(RealTimeData realTimeData, Map<String, Object> qualityMetrics, 
                                 Map<String, Object> thresholdResults) {
         int riskLevel = 1; // 默认一般风险
         
         // 根据质量指标和阈值结果更新风险等级
-        boolean hasQualityIssues = !((Boolean) qualityMetrics.getOrDefault("accuracy", true));
+        Object accuracyObj = qualityMetrics.getOrDefault("accuracy", Boolean.TRUE);
+        boolean hasQualityIssues = !(accuracyObj instanceof Boolean ? (Boolean) accuracyObj : Boolean.TRUE);
         boolean hasThresholdAlerts = thresholdResults.values().stream()
                 .anyMatch(value -> value instanceof Boolean && (Boolean) value);
         
@@ -773,6 +782,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     /**
      * 执行趋势分析
      */
+    @SuppressWarnings("null")
     private Map<String, Object> performTrendAnalysis(List<RealTimeData> dataList) {
         Map<String, Object> trendAnalysis = new HashMap<>();
         
@@ -799,6 +809,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
     /**
      * 计算趋势
      */
+    @SuppressWarnings("null")
     private Map<String, Object> calculateTrend(List<BigDecimal> values) {
         Map<String, Object> trend = new HashMap<>();
         
@@ -809,7 +820,7 @@ public class StreamProcessingServiceImpl implements StreamProcessingService {
         
         if (nonNullValues.size() < 2) {
             trend.put("direction", "insufficient_data");
-            trend.put("rate", 0);
+            trend.put("rate", Double.valueOf(0));
             return trend;
         }
         

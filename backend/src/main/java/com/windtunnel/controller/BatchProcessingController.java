@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.lang.NonNull;
 
 /**
  * 批量处理控制器
@@ -35,9 +36,10 @@ public class BatchProcessingController {
      */
     @PostMapping("/realtime-data/save")
     @Operation(summary = "批量保存实时数据", description = "批量保存实时数据以提高性能")
-    public Result<Integer> batchSaveRealTimeData(@RequestBody List<RealTimeData> realTimeDataList) {
+    @SuppressWarnings("null")
+    public Result<Integer> batchSaveRealTimeData(@NonNull @RequestBody List<RealTimeData> realTimeDataList) {
         log.info("批量保存实时数据请求，数据数量: {}", realTimeDataList != null ? realTimeDataList.size() : 0);
-        return batchProcessingService.batchSaveRealTimeData(realTimeDataList);
+        return batchProcessingService.batchSaveRealTimeData(realTimeDataList != null ? realTimeDataList : java.util.Collections.emptyList());
     }
 
     /**
@@ -45,9 +47,10 @@ public class BatchProcessingController {
      */
     @PutMapping("/realtime-data/update")
     @Operation(summary = "批量更新实时数据", description = "批量更新实时数据以提高性能")
-    public Result<Integer> batchUpdateRealTimeData(@RequestBody List<RealTimeData> realTimeDataList) {
+    @SuppressWarnings("null")
+    public Result<Integer> batchUpdateRealTimeData(@NonNull @RequestBody List<RealTimeData> realTimeDataList) {
         log.info("批量更新实时数据请求，数据数量: {}", realTimeDataList != null ? realTimeDataList.size() : 0);
-        return batchProcessingService.batchUpdateRealTimeData(realTimeDataList);
+        return batchProcessingService.batchUpdateRealTimeData(realTimeDataList != null ? realTimeDataList : java.util.Collections.emptyList());
     }
 
     /**
@@ -55,9 +58,10 @@ public class BatchProcessingController {
      */
     @DeleteMapping("/realtime-data/delete")
     @Operation(summary = "批量删除实时数据", description = "根据ID列表批量删除实时数据")
-    public Result<Integer> batchDeleteRealTimeData(@RequestBody List<String> ids) {
+    @SuppressWarnings("null")
+    public Result<Integer> batchDeleteRealTimeData(@NonNull @RequestBody List<String> ids) {
         log.info("批量删除实时数据请求，ID数量: {}", ids != null ? ids.size() : 0);
-        return batchProcessingService.batchDeleteRealTimeData(ids);
+        return batchProcessingService.batchDeleteRealTimeData(ids != null ? ids : java.util.Collections.emptyList());
     }
 
     /**
@@ -65,9 +69,15 @@ public class BatchProcessingController {
      */
     @PostMapping("/realtime-data/query")
     @Operation(summary = "批量查询实时数据", description = "根据ID列表批量查询实时数据")
-    public Result<List<RealTimeData>> batchQueryRealTimeData(@RequestBody List<String> ids) {
+    @SuppressWarnings("null")
+    public Result<List<RealTimeData>> batchQueryRealTimeData(@NonNull @RequestBody List<String> ids) {
         log.info("批量查询实时数据请求，ID数量: {}", ids != null ? ids.size() : 0);
-        return batchProcessingService.batchQueryRealTimeData(ids);
+        Result<List<RealTimeData>> result = batchProcessingService.batchQueryRealTimeData(ids != null ? ids : java.util.Collections.emptyList());
+        // 确保返回结果中的数据列表不为null
+        if (result.getData() == null) {
+            result.setData(java.util.Collections.emptyList());
+        }
+        return result;
     }
 
     /**
@@ -75,6 +85,7 @@ public class BatchProcessingController {
      */
     @DeleteMapping("/realtime-data/delete-by-timerange")
     @Operation(summary = "按时间范围批量删除", description = "按时间范围批量删除实时数据")
+    @SuppressWarnings("null")
     public Result<Integer> batchDeleteByTimeRange(
             @RequestParam String startTime,
             @RequestParam String endTime) {
@@ -89,9 +100,10 @@ public class BatchProcessingController {
      */
     @DeleteMapping("/realtime-data/delete-by-sources")
     @Operation(summary = "按数据源批量删除", description = "按数据源批量删除实时数据")
-    public Result<Integer> batchDeleteBySources(@RequestBody List<String> sources) {
+    @SuppressWarnings("null")
+    public Result<Integer> batchDeleteBySources(@NonNull @RequestBody List<String> sources) {
         log.info("按数据源批量删除请求，数据源数量: {}", sources != null ? sources.size() : 0);
-        return batchProcessingService.batchDeleteBySources(sources);
+        return batchProcessingService.batchDeleteBySources(sources != null ? sources : java.util.Collections.emptyList());
     }
 
     /**
@@ -99,8 +111,14 @@ public class BatchProcessingController {
      */
     @PostMapping("/realtime-data/process")
     @Operation(summary = "批量处理实时数据", description = "批量处理实时数据（验证、清洗、转换等）")
-    public Result<List<RealTimeData>> batchProcessRealTimeData(@RequestBody List<RealTimeData> realTimeDataList) {
+    @SuppressWarnings("null")
+    public Result<List<RealTimeData>> batchProcessRealTimeData(@NonNull @RequestBody List<RealTimeData> realTimeDataList) {
         log.info("批量处理实时数据请求，数据数量: {}", realTimeDataList != null ? realTimeDataList.size() : 0);
-        return batchProcessingService.batchProcessRealTimeData(realTimeDataList);
+        Result<List<RealTimeData>> result = batchProcessingService.batchProcessRealTimeData(realTimeDataList != null ? realTimeDataList : java.util.Collections.emptyList());
+        // 确保返回结果中的数据列表不为null
+        if (result.getData() == null) {
+            result.setData(java.util.Collections.emptyList());
+        }
+        return result;
     }
 }

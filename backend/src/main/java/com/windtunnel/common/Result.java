@@ -41,12 +41,14 @@ public class Result<T> implements Serializable {
 
     public Result() {
         this.timestamp = System.currentTimeMillis();
+        this.data = null; // 初始化为 null，但使用时应确保不为 null
     }
 
     public Result(Integer code, String message) {
         this();
         this.code = code;
         this.message = message;
+        this.data = null; // 初始化为 null，但使用时应确保不为 null
     }
 
     public Result(Integer code, String message, T data) {

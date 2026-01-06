@@ -33,6 +33,7 @@ public class DataCleanupJob implements Job {
      * @throws JobExecutionException 任务执行异常
      */
     @Override
+    @SuppressWarnings("null")
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("开始执行数据清理任务");
         
@@ -40,8 +41,8 @@ public class DataCleanupJob implements Job {
             // 计算过期时间（例如：30天前的数据）
             LocalDateTime expiredTime = LocalDateTime.now().minusDays(30);
             
-            // 调用服务层清理过期数据
-            int deletedCount = realTimeDataService.deleteExpiredData(expiredTime);
+            // 调用服务层清理过期数据，确保类型安全
+            int deletedCount = realTimeDataService.deleteExpiredData(expiredTime != null ? expiredTime : LocalDateTime.now());
             
             log.info("数据清理任务完成，共删除 {} 条过期数据，截止时间: {}", deletedCount, expiredTime);
         } catch (Exception e) {

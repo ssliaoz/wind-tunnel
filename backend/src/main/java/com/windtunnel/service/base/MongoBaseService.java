@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,8 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      * @param entity 实体
      * @return 保存后的实体
      */
-    public T save(T entity) {
+    @NonNull
+    public T save(@NonNull T entity) {
         logOperation("保存", entity);
         T savedEntity = getRepository().save(entity);
         logOperationSuccess("保存", savedEntity);
@@ -43,6 +45,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      * @param id ID
      * @return 实体
      */
+    @Nullable
     public T findById(@NonNull ID id) {
         logOperation("查找", id);
         T entity = getRepository().findById(id).orElse(null);
@@ -55,6 +58,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      *
      * @return 实体列表
      */
+    @NonNull
     public List<T> findAll() {
         logOperation("查找所有", null);
         List<T> entities = getRepository().findAll();
@@ -68,7 +72,8 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      * @param pageable 分页参数
      * @return 分页结果
      */
-    public Page<T> findAll(Pageable pageable) {
+    @NonNull
+    public Page<T> findAll(@NonNull Pageable pageable) {
         logOperation("分页查找", pageable);
         Page<T> entities = getRepository().findAll(pageable);
         logOperationSuccess("分页查找", entities.getTotalElements() + " 条记录");
@@ -91,7 +96,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      *
      * @param entity 实体
      */
-    public void delete(T entity) {
+    public void delete(@NonNull T entity) {
         logOperation("删除", entity);
         getRepository().delete(entity);
         logOperationSuccess("删除", entity);
@@ -102,7 +107,7 @@ public abstract class MongoBaseService<T, ID extends Serializable, R extends Mon
      *
      * @param entities 实体列表
      */
-    public void deleteAll(List<T> entities) {
+    public void deleteAll(@NonNull List<T> entities) {
         logOperation("批量删除", entities.size() + " 条记录");
         getRepository().deleteAll(entities);
         logOperationSuccess("批量删除", entities.size() + " 条记录");

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,7 +35,7 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public Result<Integer> batchSaveRealTimeData(List<RealTimeData> realTimeDataList) {
+    public Result<Integer> batchSaveRealTimeData(@NonNull List<RealTimeData> realTimeDataList) {
         log.info("批量保存实时数据，数量: {}", realTimeDataList != null ? realTimeDataList.size() : 0);
         
         try {
@@ -62,7 +62,7 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     }
 
     @Override
-    public Result<Integer> batchUpdateRealTimeData(List<RealTimeData> realTimeDataList) {
+    public Result<Integer> batchUpdateRealTimeData(@NonNull List<RealTimeData> realTimeDataList) {
         log.info("批量更新实时数据，数量: {}", realTimeDataList != null ? realTimeDataList.size() : 0);
         
         try {
@@ -87,7 +87,8 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     }
 
     @Override
-    public Result<Integer> batchDeleteRealTimeData(List<String> ids) {
+    @SuppressWarnings("null")
+    public Result<Integer> batchDeleteRealTimeData(@NonNull List<String> ids) {
         log.info("批量删除实时数据，ID数量: {}", ids != null ? ids.size() : 0);
         
         try {
@@ -109,20 +110,24 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     }
 
     @Override
-    public Result<List<RealTimeData>> batchQueryRealTimeData(List<String> ids) {
+    @SuppressWarnings("null")
+    public Result<List<RealTimeData>> batchQueryRealTimeData(@NonNull List<String> ids) {
         log.info("批量查询实时数据，ID数量: {}", ids != null ? ids.size() : 0);
         
         try {
             if (ids == null || ids.isEmpty()) {
-                return Result.success("ID列表为空", null);
+                return Result.success("ID列表为空", java.util.Collections.emptyList());
             }
             
             // 构建查询条件
             Query query = new Query(Criteria.where("id").in(ids));
             List<RealTimeData> dataList = mongoTemplate.find(query, RealTimeData.class);
             
-            log.info("批量查询完成，查询数量: {}", dataList.size());
-            return Result.success("批量查询成功", dataList);
+            // 确保返回非null列表
+            List<RealTimeData> result = dataList != null ? dataList : java.util.Collections.emptyList();
+            
+            log.info("批量查询完成，查询数量: {}", result.size());
+            return Result.success("批量查询成功", result);
         } catch (Exception e) {
             log.error("批量查询实时数据失败: {}", e.getMessage(), e);
             return Result.error("批量查询失败: " + e.getMessage());
@@ -130,7 +135,7 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     }
 
     @Override
-    public Result<Integer> batchDeleteByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+    public Result<Integer> batchDeleteByTimeRange(@NonNull LocalDateTime startTime, @NonNull LocalDateTime endTime) {
         log.info("批量按时间范围删除数据，时间范围: {} - {}", startTime, endTime);
         
         try {
@@ -151,7 +156,8 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     }
 
     @Override
-    public Result<Integer> batchDeleteBySources(List<String> sources) {
+    @SuppressWarnings("null")
+    public Result<Integer> batchDeleteBySources(@NonNull List<String> sources) {
         log.info("批量按数据源删除数据，数据源数量: {}", sources != null ? sources.size() : 0);
         
         try {
@@ -172,12 +178,12 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
     }
 
     @Override
-    public Result<List<RealTimeData>> batchProcessRealTimeData(List<RealTimeData> realTimeDataList) {
+    public Result<List<RealTimeData>> batchProcessRealTimeData(@NonNull List<RealTimeData> realTimeDataList) {
         log.info("批量处理实时数据，数量: {}", realTimeDataList != null ? realTimeDataList.size() : 0);
         
         try {
             if (realTimeDataList == null || realTimeDataList.isEmpty()) {
-                return Result.success("数据列表为空", null);
+                return Result.success("数据列表为空", java.util.Collections.emptyList());
             }
             
             // 批量处理：验证、清洗、转换等
@@ -202,8 +208,11 @@ public class BatchProcessingServiceImpl implements BatchProcessingService {
             // 保存处理后的数据
             List<RealTimeData> processedList = realTimeDataRepository.saveAll(realTimeDataList);
             
-            log.info("批量处理完成，处理数量: {}", processedList.size());
-            return Result.success("批量处理完成", processedList);
+            // 确保返回非null列表
+            List<RealTimeData> result = processedList != null ? processedList : java.util.Collections.emptyList();
+            
+            log.info("批量处理完成，处理数量: {}", result.size());
+            return Result.success("批量处理完成", result);
         } catch (Exception e) {
             log.error("批量处理实时数据失败: {}", e.getMessage(), e);
             return Result.error("批量处理失败: " + e.getMessage());

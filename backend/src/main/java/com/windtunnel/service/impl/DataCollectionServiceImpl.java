@@ -79,6 +79,7 @@ public class DataCollectionServiceImpl implements DataCollectionService {
     }
 
     @Override
+    @SuppressWarnings("null")
     public Result<List<RealTimeData>> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         log.info("根据时间范围查询实时数据，开始时间: {}, 结束时间: {}", startTime, endTime);
         
@@ -100,6 +101,7 @@ public class DataCollectionServiceImpl implements DataCollectionService {
     }
 
     @Override
+    @SuppressWarnings("null")
     public Result<List<RealTimeData>> findBySourceAndTimeRange(String source, LocalDateTime startTime, LocalDateTime endTime) {
         log.info("根据数据来源和时间范围查询实时数据，来源: {}, 开始时间: {}, 结束时间: {}", source, startTime, endTime);
         
@@ -147,6 +149,7 @@ public class DataCollectionServiceImpl implements DataCollectionService {
     }
 
     @Override
+    @SuppressWarnings("null")
     public Result<Boolean> deleteByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         log.info("根据时间范围删除实时数据，开始时间: {}, 结束时间: {}", startTime, endTime);
         

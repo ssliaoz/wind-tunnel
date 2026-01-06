@@ -5,6 +5,7 @@ import com.windtunnel.common.Result;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.lang.NonNull;
 
 /**
  * 批量处理服务接口
@@ -23,7 +24,7 @@ public interface BatchProcessingService {
      * @param realTimeDataList 实时数据列表
      * @return 批量保存结果
      */
-    Result<Integer> batchSaveRealTimeData(List<RealTimeData> realTimeDataList);
+    Result<Integer> batchSaveRealTimeData(@NonNull List<RealTimeData> realTimeDataList);
 
     /**
      * 批量更新实时数据
@@ -31,7 +32,7 @@ public interface BatchProcessingService {
      * @param realTimeDataList 实时数据列表
      * @return 批量更新结果
      */
-    Result<Integer> batchUpdateRealTimeData(List<RealTimeData> realTimeDataList);
+    Result<Integer> batchUpdateRealTimeData(@NonNull List<RealTimeData> realTimeDataList);
 
     /**
      * 批量删除实时数据
@@ -39,7 +40,7 @@ public interface BatchProcessingService {
      * @param ids 数据ID列表
      * @return 批量删除结果
      */
-    Result<Integer> batchDeleteRealTimeData(List<String> ids);
+    Result<Integer> batchDeleteRealTimeData(@NonNull List<String> ids);
 
     /**
      * 批量查询实时数据
@@ -47,7 +48,7 @@ public interface BatchProcessingService {
      * @param ids 数据ID列表
      * @return 批量查询结果
      */
-    Result<List<RealTimeData>> batchQueryRealTimeData(List<String> ids);
+    Result<List<RealTimeData>> batchQueryRealTimeData(@NonNull List<String> ids);
 
     /**
      * 批量按时间范围删除数据
@@ -56,7 +57,7 @@ public interface BatchProcessingService {
      * @param endTime 结束时间
      * @return 删除结果
      */
-    Result<Integer> batchDeleteByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
+    Result<Integer> batchDeleteByTimeRange(@NonNull LocalDateTime startTime, @NonNull LocalDateTime endTime);
 
     /**
      * 批量按数据源删除数据
@@ -64,7 +65,7 @@ public interface BatchProcessingService {
      * @param sources 数据源列表
      * @return 删除结果
      */
-    Result<Integer> batchDeleteBySources(List<String> sources);
+    Result<Integer> batchDeleteBySources(@NonNull List<String> sources);
 
     /**
      * 批量处理实时数据（包含验证、清洗、转换等）
@@ -72,5 +73,5 @@ public interface BatchProcessingService {
      * @param realTimeDataList 实时数据列表
      * @return 批量处理结果
      */
-    Result<List<RealTimeData>> batchProcessRealTimeData(List<RealTimeData> realTimeDataList);
+    Result<List<RealTimeData>> batchProcessRealTimeData(@NonNull List<RealTimeData> realTimeDataList);
 }

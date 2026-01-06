@@ -6,6 +6,7 @@ import com.windtunnel.repository.RealTimeDataRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,7 +31,7 @@ public class MessageConsumerService {
      * @param realTimeData 实时数据
      */
     @RabbitListener(queues = MessageQueueConfig.DATA_COLLECTION_QUEUE)
-    public void consumeRealTimeData(RealTimeData realTimeData) {
+    public void consumeRealTimeData(@NonNull RealTimeData realTimeData) {
         log.info("接收到实时数据消息: {}", realTimeData);
         
         try {
@@ -50,7 +51,7 @@ public class MessageConsumerService {
      * 
      * @param realTimeData 实时数据
      */
-    private void processData(RealTimeData realTimeData) {
+    private void processData(@NonNull RealTimeData realTimeData) {
         // 在这里可以添加数据验证、异常检测等逻辑
         log.info("正在处理实时数据，来源: {}, 时间: {}", realTimeData.getSource(), realTimeData.getDataTime());
         
