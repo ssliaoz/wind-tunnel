@@ -68,7 +68,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findAll() {
         log.debug("查询所有试验项目");
         List<ExperimentProject> result = experimentProjectRepository.selectList(null);
@@ -104,7 +103,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByLaboratoryId(Long laboratoryId) {
         log.debug("根据实验室ID查询试验项目: {}", laboratoryId);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
@@ -120,7 +118,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByProjectLeaderId(Long projectLeaderId) {
         log.debug("根据试验负责人ID查询试验项目: {}", projectLeaderId);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
@@ -136,7 +133,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByStatus(Integer status) {
         log.debug("根据试验状态查询试验项目: {}", status);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
@@ -153,7 +149,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime) {
         log.debug("根据时间范围查询试验项目: {} - {}", startTime, endTime);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
@@ -169,7 +164,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByProjectType(String projectType) {
         log.debug("根据项目类型查询试验项目: {}", projectType);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
@@ -185,7 +179,6 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
-    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByCostControlStatus(Integer costControlStatus) {
         log.debug("根据成本管控状态查询试验项目: {}", costControlStatus);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
