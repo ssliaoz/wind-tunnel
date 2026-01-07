@@ -3,6 +3,7 @@ package com.windtunnel.service.experiment;
 import com.windtunnel.entity.experiment.ExperimentProject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,7 +40,7 @@ public interface ExperimentProjectService {
      * 
      * @return 试验项目列表
      */
-    List<ExperimentProject> findAll();
+    @NonNull List<ExperimentProject> findAll();
 
     /**
      * 分页查询试验项目
@@ -47,7 +48,7 @@ public interface ExperimentProjectService {
      * @param pageable 分页参数
      * @return 分页结果
      */
-    Page<ExperimentProject> findAll(Pageable pageable);
+    @NonNull Page<ExperimentProject> findAll(Pageable pageable);
 
     /**
      * 根据实验室ID查询试验项目
@@ -55,7 +56,7 @@ public interface ExperimentProjectService {
      * @param laboratoryId 实验室ID
      * @return 试验项目列表
      */
-    List<ExperimentProject> findByLaboratoryId(Long laboratoryId);
+    @NonNull List<ExperimentProject> findByLaboratoryId(Long laboratoryId);
 
     /**
      * 根据试验负责人ID查询试验项目
@@ -63,7 +64,7 @@ public interface ExperimentProjectService {
      * @param projectLeaderId 试验负责人ID
      * @return 试验项目列表
      */
-    List<ExperimentProject> findByProjectLeaderId(Long projectLeaderId);
+    @NonNull List<ExperimentProject> findByProjectLeaderId(Long projectLeaderId);
 
     /**
      * 根据试验状态查询试验项目
@@ -71,7 +72,7 @@ public interface ExperimentProjectService {
      * @param status 试验状态
      * @return 试验项目列表
      */
-    List<ExperimentProject> findByStatus(Integer status);
+    @NonNull List<ExperimentProject> findByStatus(Integer status);
 
     /**
      * 根据时间范围查询试验项目
@@ -80,7 +81,7 @@ public interface ExperimentProjectService {
      * @param endTime 结束时间
      * @return 试验项目列表
      */
-    List<ExperimentProject> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
+    @NonNull List<ExperimentProject> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
 
     /**
      * 根据项目类型查询试验项目
@@ -88,7 +89,7 @@ public interface ExperimentProjectService {
      * @param projectType 项目类型
      * @return 试验项目列表
      */
-    List<ExperimentProject> findByProjectType(String projectType);
+    @NonNull List<ExperimentProject> findByProjectType(String projectType);
 
     /**
      * 根据成本管控状态查询试验项目
@@ -96,7 +97,7 @@ public interface ExperimentProjectService {
      * @param costControlStatus 成本管控状态
      * @return 试验项目列表
      */
-    List<ExperimentProject> findByCostControlStatus(Integer costControlStatus);
+    @NonNull List<ExperimentProject> findByCostControlStatus(Integer costControlStatus);
 
     /**
      * 删除试验项目

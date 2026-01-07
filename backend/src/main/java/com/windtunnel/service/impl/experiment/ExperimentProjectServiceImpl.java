@@ -68,9 +68,11 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findAll() {
         log.debug("查询所有试验项目");
         List<ExperimentProject> result = experimentProjectRepository.selectList(null);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
 
@@ -81,6 +83,7 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 分页结果
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull org.springframework.data.domain.Page<ExperimentProject> findAll(Pageable pageable) {
         log.debug("分页查询试验项目");
         Page<ExperimentProject> mpPage = new Page<>(pageable.getPageNumber() + 1, pageable.getPageSize());
@@ -103,11 +106,13 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByLaboratoryId(Long laboratoryId) {
         log.debug("根据实验室ID查询试验项目: {}", laboratoryId);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
         wrapper.eq("laboratory_id", laboratoryId);
         List<ExperimentProject> result = experimentProjectRepository.selectList(wrapper);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
 
@@ -118,11 +123,13 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByProjectLeaderId(Long projectLeaderId) {
         log.debug("根据试验负责人ID查询试验项目: {}", projectLeaderId);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
         wrapper.eq("project_leader_id", projectLeaderId);
         List<ExperimentProject> result = experimentProjectRepository.selectList(wrapper);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
 
@@ -133,11 +140,13 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByStatus(Integer status) {
         log.debug("根据试验状态查询试验项目: {}", status);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
         wrapper.eq("status", status);
         List<ExperimentProject> result = experimentProjectRepository.selectList(wrapper);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
 
@@ -149,11 +158,13 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime) {
         log.debug("根据时间范围查询试验项目: {} - {}", startTime, endTime);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
         wrapper.between("start_time", startTime, endTime);
         List<ExperimentProject> result = experimentProjectRepository.selectList(wrapper);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
 
@@ -164,11 +175,13 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByProjectType(String projectType) {
         log.debug("根据项目类型查询试验项目: {}", projectType);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
         wrapper.eq("project_type", projectType);
         List<ExperimentProject> result = experimentProjectRepository.selectList(wrapper);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
 
@@ -179,14 +192,15 @@ public class ExperimentProjectServiceImpl implements ExperimentProjectService {
      * @return 试验项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public @NonNull List<ExperimentProject> findByCostControlStatus(Integer costControlStatus) {
         log.debug("根据成本管控状态查询试验项目: {}", costControlStatus);
         QueryWrapper<ExperimentProject> wrapper = new QueryWrapper<>();
         wrapper.eq("cost_control_status", costControlStatus);
         List<ExperimentProject> result = experimentProjectRepository.selectList(wrapper);
+        // 显式处理返回值以满足@NonNull注解要求
         return result != null ? result.stream().filter(item -> item != null).collect(Collectors.toList()) : Collections.emptyList();
     }
-
     /**
      * 删除试验项目
      * 
