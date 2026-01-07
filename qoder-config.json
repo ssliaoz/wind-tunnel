@@ -1,0 +1,66 @@
+{
+  "environments": {
+    "dev": {
+      "name": "Development",
+      "composeFile": "docker-compose.yml",
+      "profile": "dev",
+      "port": 8080,
+      "envVars": {
+        "SPRING_PROFILES_ACTIVE": "docker",
+        "LOG_LEVEL": "DEBUG"
+      },
+      "resources": {
+        "memory": "1G",
+        "cpu": "1"
+      }
+    },
+    "test": {
+      "name": "Testing",
+      "composeFile": "docker-compose.yml",
+      "profile": "test",
+      "port": 8080,
+      "envVars": {
+        "SPRING_PROFILES_ACTIVE": "docker-test",
+        "LOG_LEVEL": "INFO"
+      },
+      "resources": {
+        "memory": "2G",
+        "cpu": "2"
+      }
+    },
+    "prod": {
+      "name": "Production",
+      "composeFile": "docker-compose.yml",
+      "profile": "prod",
+      "port": 8080,
+      "envVars": {
+        "SPRING_PROFILES_ACTIVE": "docker-prod",
+        "LOG_LEVEL": "WARN",
+        "JAVA_OPTS": "-Xms2g -Xmx4g"
+      },
+      "resources": {
+        "memory": "4G",
+        "cpu": "4"
+      },
+      "replicas": 3
+    }
+  },
+  "deployment": {
+    "imageRegistry": "",
+    "namespace": "wind-tunnel",
+    "healthCheck": {
+      "path": "/actuator/health",
+      "timeout": 30,
+      "retries": 5
+    },
+    "rollback": {
+      "enabled": true,
+      "versionsToKeep": 3
+    }
+  },
+  "security": {
+    "enableTLS": false,
+    "certPath": "",
+    "enableAuth": true
+  }
+}

@@ -1,0 +1,37 @@
+# Jenkins 插件列表 - 智慧风洞管理系统 CI/CD
+# 格式: 插件ID:版本号
+
+# 核心插件
+git:4.11.3
+github:1.34.2
+workflow-aggregator:2.6
+pipeline-stage-view:2.19
+docker-workflow:1.26
+kubernetes:3.5.0
+
+# 构建工具插件
+maven-plugin:3.15
+ant:1.11
+
+# 通知插件
+email-ext:2.87
+slack:605.v0da_06a_1b_c6f1
+
+# 质量门禁插件
+checkstyle:4.1.0
+findbugs:4.78
+pmd:3.74141051000404
+
+# 安全插件
+dependency-check-jenkins-plugin:5.3.2
+warnings-ng:9.8.0
+
+# UI增强插件
+blueocean:1.25.3
+dark-theme:100.vf9954b_e0e0a_8
+
+# 其他实用插件
+build-timeout:1.20
+timestamper:1.13
+ansicolor:1.0.2
+parameter-separator:3.0
